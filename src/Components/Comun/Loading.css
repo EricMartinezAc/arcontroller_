@@ -1,0 +1,11 @@
+.loading {
+    z-index: 1000;
+    background-color: aliceblue;
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    margin-left: -10px;
+    width: 100vw;
+    height: 110%;
+    opacity: .9
+}
