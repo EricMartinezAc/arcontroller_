@@ -6,7 +6,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
 //componentes
 import Inicio_ from './Components/Routes/Inicio/Inicio'
-import Dashboard_ from './Components/Routes/App/Dashboard';
+// import Singing_ from './Components/Routes/Singing/Singin';
+// import Dashboard_ from './Components/Routes/Dashboard/Dashboard';
 
 
 export default class App extends Component {
@@ -22,8 +23,9 @@ export default class App extends Component {
         </div>
         <Router>
           <Routes>
-            <Route exact path='/' element={<Inicio_/>}></Route>
-            <Route usuario path='/Dashboard' element={<Dashboard_/>}></Route>
+            <Route exact path='/' element={<Inicio_ />}></Route>
+            {/* <Route path='/singing' element={<Singing_ />}></Route>
+            <Route usuario path='/Dashboard' element={<Dashboard_ />}></Route> */}
           </Routes>
         </Router>
       </div>

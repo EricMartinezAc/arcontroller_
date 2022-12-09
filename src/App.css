@@ -1,7 +1,9 @@
 body, html {
-  background: #6A5ACD;
-  background-blend-mode: color-burn;
+  /* background: #6A5ACD;
+  background-blend-mode: color-burn; */
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin: 0 auto;
+  padding: 0 auto;
 }
 
 .noRenderable {

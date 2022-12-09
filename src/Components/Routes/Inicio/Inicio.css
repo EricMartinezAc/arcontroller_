@@ -15,6 +15,11 @@
     padding: 10px 30px;
 }
 
+.section_inicio {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
 @media (max-width: 1200px) {
     .authContent {
         width: 50%;
@@ -64,6 +69,7 @@
     .authContent {
         display: none;
     }
+
     .noAppable {
         display: inline;
     }

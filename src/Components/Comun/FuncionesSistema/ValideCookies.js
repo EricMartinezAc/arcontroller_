@@ -6,7 +6,7 @@ module.exports = function ValideCookies(route, cookies, CambiarEstadoAlert) {
         }, 5000);
     }
 
-    if (route == 'App') {
+    if (route === 'App') {
         if (!cookies.get('resp') ||
             cookies.get('email_' === 'undefined') ||
             typeof cookies.get('email_') === 'undefined' ||

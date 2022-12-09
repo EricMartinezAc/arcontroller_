@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
-import Copyright from '../etiquetas/Copyright'
+//import Copyright from '../etiquetas/Copyright'
 import './Footer.css';
-import '../../Comun/Elementos.css'
+import '../Elementos.css'
 
 export default class Footer extends Component {
     render() {
@@ -36,7 +36,7 @@ export default class Footer extends Component {
                     | - |<a href='email:arcontroller.support@gmail.com.com'> arcontroller.support@gmail.com.com</a>
                     <br />
                 </div>
-                <Copyright />
+                {/* <Copyright /> */}
             </div>
         )
     }
