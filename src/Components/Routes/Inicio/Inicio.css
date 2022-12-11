@@ -15,9 +15,24 @@
     padding: 10px 30px;
 }
 
+.section_alertCookies{
+    margin: 0 20px;
+    background-color: #ede;
+}
+
 .section_inicio {
     display: grid;
     grid-template-columns: 3fr 1fr;
+    background-image: url('../../../Assets/Imgs/fondos/abstract-vector.jpg');
+    background-repeat: no-repeat;
+    background-position-x: -50%;
+}
+
+.aside_inicio {
+    padding: 30px;
+    border-left: #ece 2px solid ;
+    margin: 0 ;
+    padding: 0 auto;
 }
 
 @media (max-width: 1200px) {

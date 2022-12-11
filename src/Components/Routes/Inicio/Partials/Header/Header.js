@@ -22,7 +22,7 @@ import { Divider } from '@mui/material';
 const pages = ['Asesorías', 'Productos', 'Contacto', 'Nosotros'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function ResponsiveAppBar() {
+function ResponsiveAppBar(props) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -162,7 +162,8 @@ function ResponsiveAppBar() {
 
 
                     <Box sx={{
-                        display: 'grid', gridTemplateColumns: '1fr 2fr 1fr',
+                        display: props.stat_inicio_sesion ? 'grid' : 'none',
+                        gridTemplateColumns: '1fr 2fr 1fr',
                         width: 'min-content', height: 'min-content%',
                     }} >
 
@@ -178,7 +179,7 @@ function ResponsiveAppBar() {
 
 
                         <Box sx={{ width: 'min-content', height: 'min-content', flexGrow: 0, }}>
-                            <Tooltip title="Open settings">
+                            <Tooltip title="Inicia sesión">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ height: '100%', p: 0 }}>
                                     <Avatar alt="Remy Sharp" src={Logck} />
                                 </IconButton>
