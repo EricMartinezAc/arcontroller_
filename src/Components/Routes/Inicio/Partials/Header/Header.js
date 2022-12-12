@@ -11,13 +11,15 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { Divider } from '@mui/material';
 //import AdbIcon from '@mui/icons-material/Adb';
 
 import './Header.css'
 
+import Loading from '../../../../Comun/Loading';
+
 import LogoARC from '../../../../../Assets/Imgs/logos/rueda_tubos_142x78.png'
 import Logck from '../../../../../Assets/Imgs/icos/logck.png'
-import { Divider } from '@mui/material';
 
 const pages = ['Asesorías', 'Productos', 'Contacto', 'Nosotros'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -25,6 +27,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function ResponsiveAppBar(props) {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [state_loading, setState_loading] = React.useState(false);
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
@@ -40,6 +43,10 @@ function ResponsiveAppBar(props) {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const RedirectSigin = () => {
+        window.location = '/Singin'
+    }
 
     return (
         <AppBar position="static">
@@ -161,11 +168,14 @@ function ResponsiveAppBar(props) {
 
 
 
-                    <Box sx={{
-                        display: props.stat_inicio_sesion ? 'grid' : 'none',
-                        gridTemplateColumns: '1fr 2fr 1fr',
-                        width: 'min-content', height: 'min-content%',
-                    }} >
+                    <Box
+                        onClick={RedirectSigin}
+                        sx={{
+                            cursor: 'pointer',
+                            display: props.stat_inicio_sesion ? 'grid' : 'none',
+                            gridTemplateColumns: '1fr 2fr 1fr',
+                            width: 'min-content', height: 'min-content%',
+                        }} >
 
                         <Divider sx={{ border: '1px solid #abb' }} orientation="vertical" flexItem />
                         <Typography

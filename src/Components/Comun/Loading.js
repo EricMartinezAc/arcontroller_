@@ -1,66 +1,33 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Fade from '@mui/material/Fade';
-import { withStyles } from '@mui/material/styles';
-import CircularProgress from '@mui/material/CircularProgress';
-import Typography from "@mui/material/Typography";
+import { Typography } from '@mui/material'
+import { Box, width } from '@mui/system'
+import React, { Component } from 'react'
 
-import "./Loading.css";
+import img_loading from '../../Assets/Imgs/icos/loading3.gif'
 
-const styles = theme => ({
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        marginTop: '20%'
-    },
-    button: {
-        margin: theme.spacing(2),
-        background: '#FA5',
-    },
-    placeholder: {
-        height: 100,
-    },
-});
-
-class DelayingAppearance extends React.Component {
-    state = {
-        loading: true
-    };
-
+export default class Loading extends Component {
     render() {
-        const { classes } = this.props;
-        const { loading } = this.state;
-
         return (
-            <div className='loading'>
-                <div className={classes.root}>
-                    <div className={classes.placeholder}>
-                        <Fade
-                            in={loading}
-                            style={{
-                                transitionDelay: loading ? '500ms' : '0ms',
-                            }}
-                            unmountOnExit
-                        >
-                            <CircularProgress />
-                        </Fade>
-
-                    </div>
+            <React.Fragment>
+                <Box
+                    sx={{
+                        width: '100%',
+                        height: 'min-content',
+                        position: 'relative',
+                        top: '-100px',
+                        textAlign: 'center'
+                    }}
+                >
+                    <img
+                        src={img_loading} alt="Cargando" />
+                    <br /><br />
                     <Typography
-                        align='center'
-                        variant='h4' >
-                        Cargando datos.. espere porfavor
+                        variant='h5'
+                        sx={{ width: '100%', color: '#232' }}
+                    >
+                        Esperar es parte del proceso...
                     </Typography>
-                </div>
-            </div >
-
-        );
+                </Box>
+            </React.Fragment>
+        )
     }
 }
-
-DelayingAppearance.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(DelayingAppearance);

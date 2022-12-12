@@ -1,6 +1,26 @@
+import { Alert } from '@mui/material'
 import React, { Component } from 'react'
 
+import Login from './Login/Login';
+import Registro from './Login/Registro'
+
 export default class Singin extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            visibleFormAuth: true,
+
+            //Alert
+            estadoAlert: 'none',
+            severityAlert: '',
+            mensajeAlerta: ''
+
+        }
+    }
+
+
+
     render() {
         if (this.state.visibleFormAuth) {
 
@@ -16,7 +36,6 @@ export default class Singin extends Component {
                             <Login
                                 estadoLoading={this.state.estadoLoading}
                                 estadoAlert={this.state.estadoAlert}
-                                ExprRegulares={this.ExprRegulares}
                                 mensajeAlerta={this.state.mensajeAlerta}
                                 CambiarEstadoLoading={this.CambiarEstadoLoading}
                                 CambiarEstadoAlert={this.CambiarEstadoAlert}

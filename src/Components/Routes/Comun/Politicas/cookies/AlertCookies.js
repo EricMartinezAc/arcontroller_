@@ -10,19 +10,15 @@ export default class AlertCookies extends Component {
 
     constructor(props) {
         super(props);
-        this.state={
-            
+        this.state = {
+
         }
     }
 
-    AceptacionCookies= this.props.AceptacionCookies
-    PermitirInicioSesion=this.props.PermitirInicioSesion
+    AceptacionCookies = this.props.AceptacionCookies
+    DenegarCookies = this.props.DenegarCookies
 
-
-    
-    DenegarCookies = () => {
-        this.PermitirInicioSesion(false)
-    }
+    CambiarEstadoDescriptionAlerts = this.props.CambiarEstadoDescriptionAlerts
 
 
     render() {
@@ -85,7 +81,7 @@ export default class AlertCookies extends Component {
                                 margin: '0 auto', padding: '30px 50px'
                             }}
                         >
-                            Esta aplicación web usa cookies.
+                            Esta aplicación web usa cookies. Acepta las políticas para continuar.
                         </Typography>
                         <Typography
                             sx={{
