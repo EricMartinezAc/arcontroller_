@@ -1,4 +1,4 @@
-import { Alert } from '@mui/material'
+import { Alert, Box, Typography } from '@mui/material'
 import React, { Component } from 'react'
 
 import Login from './Login/Login';
@@ -19,20 +19,59 @@ export default class Singin extends Component {
         }
     }
 
+    CambiarVisibleFormAuth = () => {
+        this.setState({ visibleFormAuth: !this.state.visibleFormAuth })
+    }
+
 
 
     render() {
-        if (this.state.visibleFormAuth) {
-
-            return (
-                <div>
-                    <div className="Content">
-                        <Alert
-                            style={{ display: this.state.estadoAlert, width: '60%', position: 'absolute', top: '10px', zIndex: '100' }}
-                            severity={this.state.severityAlert}
-                        >{this.state.mensajeAlerta}
-                        </Alert>
-                        <div className='authContent'>
+        return (
+            <Box
+                sx={{
+                    backgroundColor: '#a9a',
+                    width: '100%',
+                    height: 'fit-content%',
+                    display: 'grid',
+                    gridTemplateColumns: '1fr 2fr',
+                }}
+            >
+                <button
+                    onClick={this.CambiarVisibleFormAuth}
+                >prueba</button>
+                <Box
+                    sx={{
+                        widht: '100%',
+                        height: 'auto',
+                        display: 'flex',
+                        justofyContent: 'center',
+                        alignContent: 'center',
+                        padding: '30px 50px'
+                    }}>
+                    <Box
+                        sx={{
+                            display: this.state.visibleFormAuth ? 'none' : 'true'
+                        }}
+                    >
+                        <Box>
+                            <Registro
+                                estadoLoading={this.state.estadoLoading}
+                                estadoAlert={this.state.estadoAlert}
+                                ExprRegulares={this.ExprRegulares}
+                                mensajeAlerta={this.state.mensajeAlerta}
+                                CambiarVisibleFormAuth={this.CambiarVisibleFormAuth}
+                                CambiarEstadoLoading={this.CambiarEstadoLoading}
+                                CambiarEstadoAlert={this.CambiarEstadoAlert}
+                                CambiarFormAuth={this.CambiarFormAuth}
+                            />
+                        </Box>
+                    </Box>
+                    <Box
+                        sx={{
+                            display: this.state.visibleFormAuth ? 'true' : 'none'
+                        }}
+                        className="Content">
+                        <Box >
                             <Login
                                 estadoLoading={this.state.estadoLoading}
                                 estadoAlert={this.state.estadoAlert}
@@ -41,39 +80,22 @@ export default class Singin extends Component {
                                 CambiarEstadoAlert={this.CambiarEstadoAlert}
                                 CambiarFormAuth={this.CambiarFormAuth}
                             />
-                        </div>
+                        </Box>
 
-                    </div>
-                </div>
-            )
-        }
-        if (this.state.visibleFormAuth === false) {
-            return (
-                <div>
-                    <div className="Content">
-                        <Alert
-                            style={{ display: this.state.estadoAlert, width: '60%', position: 'absolute', top: '10px', zIndex: '100' }}
-                            severity={this.state.severityAlert}
-                        >{this.state.mensajeAlerta}
-                        </Alert>
-                        <div className='authContent'>
-                            <Registro
-                                estadoLoading={this.state.estadoLoading}
-                                estadoAlert={this.state.estadoAlert}
-                                ExprRegulares={this.ExprRegulares}
-                                mensajeAlerta={this.state.mensajeAlerta}
-                                CambiarEstadoLoading={this.CambiarEstadoLoading}
-                                CambiarEstadoAlert={this.CambiarEstadoAlert}
-                                CambiarFormAuth={this.CambiarFormAuth}
-                            />
-                        </div>
-                    </div>
-                </div>
-            )
-        }
+                    </Box>
+                </Box>
+
+                <Box
+                    sx={{
+                        backgroundColor: '#ede',
+                        width: '100%'
+                    }}
+                >
+
+                </Box>
 
 
-
-
+            </Box>
+        )
     }
 }

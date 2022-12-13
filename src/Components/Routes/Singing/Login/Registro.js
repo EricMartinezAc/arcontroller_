@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
 
 //recursos
-import './Registro.css';
+//import './Registro.css';
 import Logo from '../../../../Assets/Imgs/logos/logo_632x512.png';
 
 //librerias

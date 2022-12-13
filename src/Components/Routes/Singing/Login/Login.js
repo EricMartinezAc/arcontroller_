@@ -12,6 +12,7 @@ import ReqResDatos_auth_API from '../../../Comun/FuncionesSistema/class_authAPI'
 
 //librerias
 import Cookies from 'universal-cookie'
+import { Box } from '@mui/material';
 
 const cookies = new Cookies()
 const reqResDatos_auth_API = new ReqResDatos_auth_API()
@@ -38,6 +39,7 @@ export default class Login extends Component {
     }
 
     //extracción de funciones
+    CambiarVisibleFormAuth = () => this.props.CambiarVisibleFormAuth
     CambiarEstadoLoading = (state_) => this.props.CambiarEstadoLoading(state_)
     CambiarEstadoAlert = (state_, mensajeAlerta_, severityAlert_) => this.props.CambiarEstadoAlert(state_, mensajeAlerta_, severityAlert_)
     CambiarFormAuth = () => this.props.CambiarFormAuth
@@ -103,7 +105,7 @@ export default class Login extends Component {
     }
 
     componentDidUpdate = () => {
-        if(this.state.dashboard){
+        if (this.state.dashboard) {
             window.location = 'http://localhost:3000/Dashboard'
         }
     }
@@ -173,7 +175,7 @@ export default class Login extends Component {
 
             //Datos a consultar
             try {
-              const consult =  async () => {
+                const consult = async () => {
                     console.log('1');
                     await reqResDatos_auth_API.SetDatsToAPI({
                         emailAuth: this.state.emailAuth,
@@ -187,10 +189,10 @@ export default class Login extends Component {
                     console.log('3')
                     const asa = await reqResDatos_auth_API.SendDatsAPI(datos_)
                     console.log('4')
-                    this.setState({datosAPI: asa, dashboard: true});
+                    this.setState({ datosAPI: asa, dashboard: true });
                 }
-              consult()
-              
+                consult()
+
 
             } catch (error) {
                 alert('error enviando datos al servidor, revise su conexion: ' + error)
@@ -207,12 +209,21 @@ export default class Login extends Component {
     }
     render() {
         return (
-            <div>
+            <Box
+                sx={{
+                    display: 'block',
+                    padding: '0 auto',
+                    margin: '0 auto',
+                    textAlign: 'center',
+                    color: '#232'
+                }}
+            >
                 <img alt='logo' className='logo' src={Logo} />
 
-                <h3 className='title'>AUTENTICACIÓN DE GERENTE</h3>
+                <h3 className='title_'>AUTENTICACIÓN DE GERENTE</h3>
 
                 <form className="FormAuth" onSubmit={this.EnviarDatosAuth}>
+
                     <input
                         type="text"
                         id="area"
@@ -271,7 +282,7 @@ export default class Login extends Component {
                     />
                     <br />
 
-                    <Link to="#" className="footer-text-reg" onClick={this.props.CambiarFormAuth}>
+                    <Link to="#" className="footer-text-reg" onClick={this.props.CambiarVisibleFormAuth}>
                         Crea un nuevo usuario
                     </Link>
                     <br />
@@ -280,7 +291,7 @@ export default class Login extends Component {
                     </Link>
                 </form>
                 <br />
-            </div>
+            </Box>
         )
     }
 }

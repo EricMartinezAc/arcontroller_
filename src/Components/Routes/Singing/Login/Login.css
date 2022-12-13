@@ -1,16 +1,11 @@
 .logo {
     width: 200px;
     height: 150px;
-    position: relative;
-    top: -50px;
-    left: calc(47% - 23%);
+    margin: 30px 0;
 }
 
-.title {
-    width: 100%;
-    color: #FFF;
-    text-align: center;
-    margin-top: -30px;
+.title_ {
+    margin: 10px 0 30px 0;
 }
 
 .FormAuth {
@@ -22,10 +17,10 @@
     outline: none;
     height: 40px;
     background: #B80F22;
-    color: #FFF;
     font-size: 18px;
     border-radius: 20px;
 }
+
 
 .FormAuth {
     padding: auto;
@@ -51,9 +46,15 @@
     background: transparent;
     outline: none;
     height: 40px;
-    color: #FFF;
     background: transparent;
     font-size: 16px;
+}
+
+.FormAuth input[type="text"]:hover ,
+.FormAuth input[type="password"]:hover {
+    background-color: #ded;
+    border-radius: 3%;
+    height: 50px;
 }
 
 .FormRegtr input[type="text"] {
@@ -62,7 +63,6 @@
     background: transparent;
     outline: none;
     height: 30px;
-    color: #FFF;
     background: transparent;
     font-size: 14px;
 }
@@ -72,38 +72,34 @@
     outline: none;
     height: 40px;
     background: #B80F22;
-    color: #FFF;
     font-size: 18px;
     border-radius: 20px;
+    color: #ded;
 }
 
-.FormAuth input[type="submit"] {
-    border: none;
-    outline: none;
-    height: 40px;
-    background: #B80F22;
-    color: #FFF;
-    font-size: 18px;
-    border-radius: 20px;
+.FormAuth input[type="submit"]:hover {
+    height: 60px;
+    font-size: 25px;
+    border-radius: 50px;
 }
 
 .FormAuth a {
     text-decoration: none;
     line-height: 20px;
+    color: #232
 }
 
 .FormAuth a:hover {
-    color: #FFF;
     font-weight: 700;
+    color: rgb(56, 118, 242);
 }
 
 .footer-text-ise {
-    color: darkgray;
+    color: #232;
     font-size: 12px;
 }
 
 .footer-text-aut {
-    color: #FFF;
 }
 
 @media (max-width: 1200px) {}
