@@ -1,0 +1,18 @@
+ (controller financiero, controller industrial, controller de proyectos, controller de costes…).
+
+A continuación quería compartiros, desde mi experiencia, cuáles son las funciones principales de un controller en un entorno industrial que, como veréis, están ligadas con el control financiero y la visión estratégica de la compañía:
+
+    Elaboración y reporte tanto de los planes estratégicos como forecast semanales, mensuales y semestrales.
+    Control, análisis y reporte de las desviaciones frente al plan estratégico.
+    Apoyo en la toma de decisiones estratégicas; tras el análisis de la información, el controller deberá reportar esta información al director de la planta y apoyarle en la eventual toma de decisiones a la vista de los datos presentados. Es por ello, que la figura del controller es clave dentro de la compañía y suele ser un perfil de confianza del director.
+    Control de riesgos y oportunidades que surjan en el transcurso de la actividad de la empresa.
+    Asistencia a las reuniones del comité de dirección, como miembro del mismo, y coordinación con el resto de las áreas en materia financiera.
+    Seguimiento, en coordinación con el resto de los departamentos, de los indicadores que se consideren necesarios para el buen funcionamiento financiero.
+    Elaboración de los cierres contables en conjunto con los servicios centrales.
+    Atención y aportación de la información necesaria a las auditorías tanto internas como externas.
+    Coordinación del equipo de control de gestión.
+    Otras funciones algo más técnicas, pero que merecen la pena mencionar, son: Creación del coste Standard, control de los activos en coordinación, habitualmente, con el departamento de ingeniería o supervisión del correcto registro del escandallo de materiales en el sistema (incluido los routings y tiempos de ciclo).
+
+Además, todas estas funciones principales se ven complementadas con toda una serie de tareas de gestión diaria de la fábrica en materia financiera.
+
+Con esto, espero haberos acercado un poco más al mundo del control de gestión dentro de una planta industrial. 
