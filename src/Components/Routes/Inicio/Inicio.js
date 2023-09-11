@@ -60,7 +60,7 @@ export default class Inicio extends Component {
 
   //VALIDACIÓN DE COOKIES
   cookies = new Cookies()
-  resptValideCookies = ValideCookies('Inicio', this.cookies, ['aceptLegacy', 'resp', 'email_', 'product', 'pswUser_', 'area_', ])
+  resptValideCookies = ValideCookies('Inicio', this.cookies, ['aceptLegacy', 'resp', 'email_', 'product', 'pswUser_', 'area_',])
 
   //FUNCIONALIDAD PARA CLIENTES
   CambiarEstadoDescriptionAlerts(
@@ -109,7 +109,7 @@ export default class Inicio extends Component {
 
   //CICLO DE VIDA
   componentDidMount = () => {
-    RestarApp(this.cookies, ['id_prod', 'user', 'pswLogin', 'aceptLegacy', 'token'], 1)
+    RestarApp(this.cookies, ['aceptLegacy', 'token'])
     if (this.resptValideCookies.value && this.resptValideCookies.msj.length > 3) {
       this.CambiarEstadoDescriptionAlerts(
         true, 'warning', 'APLICACIÓN VERIFICADA',
@@ -140,27 +140,22 @@ export default class Inicio extends Component {
 
 
   render() {
-    return ( <
+    return (<
       React.Fragment >
-      <
-      Box sx = {
-        {
-          display: this.state.state_loading ? 'flex' : 'none',
-          backgroundColor: 'rgba(238, 221, 238, 0.742)',
-          zIndex: 10,
-          position: 'absolute',
-          width: '100%',
-          height: '125%',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }
-      } >
-      <
-      Loading / >
-      <
-      /Box> <
-      Box sx = {
-        {
+      <  Box sx={{
+        display: this.state.state_loading ? 'flex' : 'none',
+        backgroundColor: 'rgba(238, 221, 238, 0.742)',
+        zIndex: 10,
+        position: 'absolute',
+        width: '100%',
+        height: '125%',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }} >
+        <Loading />
+      </Box>
+      <Box
+        sx={{
           display: this.state.stateAlertDialogs ? 'flex' : 'none',
           zIndex: 10,
           width: '100%',
@@ -168,67 +163,34 @@ export default class Inicio extends Component {
           position: 'absolute',
           justifyContent: 'center',
           alignItems: 'center'
-        }
-      } >
-      <
-      AlertDialogs AlertSeverity = {
-        this.state.AlertSeverity
-      }
-      AlertTilte = {
-        this.state.AlertTilte
-      }
-      AlertMsjLow = {
-        this.state.AlertMsjLow
-      }
-      AlertMsjHight = {
-        this.state.AlertMsjHight
-      }
-      /> < /
-      Box > <
-      header >
-      <
-      Header CambiarEstadoLoading = {
-        this.CambiarEstadoLoading
-      }
-      stat_inicio_sesion = {
-        this.state.stat_inicio_sesion
-      }
-      /> < /
-      header > <
-      section className = 'section_alertCookies'
-      style = {
-        {
-          display: this.state.stat_acept_cookies ? 'none' : 'block'
-        }
-      } >
-      <
-      AlertCookies AceptacionCookies = {
-        this.AceptacionCookies
-      }
-      DenegarCookies = {
-        this.DenegarCookies
-      }
-      /> < /
-      section > <
-      section className = 'section_inicio' >
-      <
-      main >
-      <
-      Main / >
-      <
-      /main> <
-      aside className = 'aside_inicio' >
-      <
-      Aside / >
-      <
-      /aside> < /
-      section > <
-      footer >
-      <
-      Footer / >
-      <
-      /footer> < /
-      React.Fragment >
+        }}
+      >
+        <  AlertDialogs AlertSeverity={this.state.AlertSeverity}
+          AlertTilte={this.state.AlertTilte}
+          AlertMsjLow={this.state.AlertMsjLow}
+          AlertMsjHight={this.state.AlertMsjHight}
+        />
+      </Box>
+      <header >
+        <Header CambiarEstadoLoading={this.CambiarEstadoLoading}
+          stat_inicio_sesion={this.state.stat_inicio_sesion}
+        />
+      </header>
+      <section className='section_alertCookies'
+        style={{ display: this.state.stat_acept_cookies ? 'none' : 'block' }} >
+        <AlertCookies AceptacionCookies={this.AceptacionCookies}
+          DenegarCookies={this.DenegarCookies} />
+      </section>
+      <section className='section_inicio'>
+        <main>
+          <Main />
+        </main>
+        <aside className='aside_inicio'>
+          <Aside />
+        </aside>
+      </section>
+      <footer><Footer /></footer>
+    </React.Fragment >
     )
   }
 }

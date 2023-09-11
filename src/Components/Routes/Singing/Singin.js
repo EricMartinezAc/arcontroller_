@@ -2,8 +2,11 @@ import { AssistWalkerTwoTone } from '@mui/icons-material';
 import { Alert, Box, Button, Grid, Link, Stack, Typography } from '@mui/material'
 import React, { Component } from 'react'
 import Cookies from 'universal-cookie'
+import axios from 'axios';
 
 import ValideCookies from '../../Comun/ModulosSis/ValideCookies'
+import ReqResDatos_auth_API from '../../Comun/ModulosSis/class_authAPI';
+import RestarApp from '../../Comun/ModulosSis/RestarApp';
 
 import Login from './Login/Login';
 import Registro from './Login/Registro'
@@ -32,7 +35,8 @@ export default class Singin extends Component {
 
     //VALIDACIÓN DE COOKIES
     cookies = new Cookies()
-    resptValideCookies = ValideCookies('Singin', this.cookies, ['aceptLegacy', 'resp', 'email_', 'product', 'pswUser_', 'area_',])
+
+    reqResDatos_auth_API = new ReqResDatos_auth_API()
 
 
     //FUNCIONALIDAD PARA CLIENTES
@@ -52,26 +56,23 @@ export default class Singin extends Component {
 
 
     componentDidMount = () => {
-        //VALIDACIÓN DE COOKIES
-        if (this.resptValideCookies.value && this.resptValideCookies.msj.length > 3) {
+        //VALIDACIÓN DE APP
+        if (this.cookies.get('aceptLegacy') === undefined) {
             this.CambiarEstadoDescriptionAlerts(
-                true, 'warning', 'APLICACIÓN VERIFICADA',
-                'Recuerda limpiar las cookies de tu browser y tener control sobre ellas',
-                this.resptValideCookies.msj
+                true, 'error', 'APLICACIÓN VERIFICADA',
+                'permisos denegados: ',
+                'Debes aceptar políticas de aplicación para usarla'
             )
             setTimeout(() => {
-                window.location = `http://localhost:3000/${this.resptValideCookies.routeTarjet}`
+                window.location = `http://localhost:3000/`
             }, 3000)
         }
-        if (!this.resptValideCookies.value && this.resptValideCookies.msj.length > 3) {
-            this.CambiarEstadoDescriptionAlerts(
-                true, 'warning', 'APLICACIÓN VERIFICADA',
-                'Recuerda limpiar las cookies de tu browser y tener control sobre ellas',
-                this.resptValideCookies.msj
-            )
+        let resptValideCookies = ValideCookies('Singin', this.cookies)
+        if (resptValideCookies.value) {
+            this.CambiarEstadoDescriptionAlerts(true, 'success', 'LOGIN', 'verificado', resptValideCookies.mjs)
             setTimeout(() => {
-                window.location = `http://localhost:3000/${this.resptValideCookies.routeTarjet}`
-            }, 3000)
+                this.reqResDatos_auth_API.GetAPP(this.cookies.get('token'), axios)
+            }, 4500);
         }
     }
 

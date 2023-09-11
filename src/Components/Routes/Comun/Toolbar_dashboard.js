@@ -19,24 +19,18 @@ export default class Dashb_toolbard extends Component {
             API_DATA_MASTER_MESSAGES: 0
         }
 
-        this.fecha = this.props.fecha
-        this.handleDrawer = this.props.handleDrawer
-        this.openDrawer = this.props.openDrawer
-        this.RestarApp = this.props.RestarApp
-        this.cookies = this.props.cookies
-        this.keyDatosCookies = this.props.keyDatosCookies
-        this.CambiarEstadoAlert = this.props.CambiarEstadoAlert
-    }
 
+    }
+    fecha = this.props.fecha
+    user = this.props.user
+    handleDrawer = this.props.handleDrawer
+    openDrawer = this.props.openDrawer
+    CerrarApp = this.props.CerrarApp
     MonstrarNotificaiones = () => {
         return true
     }
     MostrarMensajes = () => {
         return true
-    }
-    CerrarApp = () => {
-        this.RestarApp(this.cookies, this.keyDatosCookies, 3)
-        this.CambiarEstadoAlert('block', 'La aplicación a cerrado de forma segura', 'info')                   
     }
 
     componentDidMount = () => {
@@ -66,8 +60,8 @@ export default class Dashb_toolbard extends Component {
                         {/* //tittle */}
                         <Grid item xs={8}>
                             <Typography style={{ fontFamily: 'Poppins' }} component="h1" variant="h6" noWrap >
-                                {this.cookies.get('email_') || 'Invitado'} / 
-                                {this.cookies.get('area_') || 'Sin Área'}
+                                {this.user.name || 'Invitado'} /
+                                {this.user.area || 'Sin Área'}
                             </Typography>
                         </Grid>
                         {/* barra de Notificaciones */}

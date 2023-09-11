@@ -13,8 +13,7 @@ import axios from 'axios'
 import Logo from '../../../../Assets/Imgs/logos/logo_632x512.png';
 import './Login.css';
 import ReqResDatos_auth_API from '../../../Comun/ModulosSis/class_authAPI';
-import Loading from '../../../Comun/Loading'
-import AlertDialogs from '../../../Comun/DescriptionAlerts';
+import RestartApp from '../../../Comun/ModulosSis/RestarApp'
 
 //métodos
 import {
@@ -70,13 +69,22 @@ export default class Login extends Component {
                 //envio de datos
                 setTimeout(async () => {
                     let RespAPI = await reqResDatos_auth_API.SendDatsAPI('auth', axios)
+                    if (RespAPI === null) {
+                        RestartApp()
+                        alert('no se obtubo respuesta del servidor')
+                    }
+                    console.log(RespAPI);
+                    console.log('====================================');
                     await this.CambiarEstadoLoading()
                     if (await RespAPI.value.valor === 400) {
                         await AsigneCookies(
-                            this.state.user,
-                            this.state.pswLogin,
+                            'token',
+                            RespAPI.value.respt,
+                            cookies
+                        )
+                        await AsigneCookies(
+                            'id_prod',
                             this.state.id_prod,
-                            RespAPI.value.resp,
                             cookies
                         )
                         await reqResDatos_auth_API.GetAPP(RespAPI.value.respt, axios)
@@ -115,92 +123,55 @@ export default class Login extends Component {
     }
 
     render() {
-        return ( <
-            Box sx = {
-                {
-                    display: 'block',
-                    padding: '0 auto',
-                    margin: '0 auto',
-                    textAlign: 'center',
-                    color: '#232'
-                }
-            } >
-            <
-            img alt = 'logo'
-            className = 'logo'
-            src = {
-                Logo
-            }
-            />
+        return (
+            < Box sx={{
+                display: 'block',
+                padding: '0 auto',
+                margin: '0 auto',
+                textAlign: 'center',
+                color: '#232'
+            }} >
+                <img alt='logo' className='logo' src={Logo} />
 
-            <
-            h3 className = 'title_' > AUTENTICACIÓN < /h3>
+                <h3 className='title_'> AUTENTICACIÓN </h3>
 
-            <
-            form className = "FormAuth"
-            onSubmit = {
-                this.EnviarDatosAuth
-            } >
+                <form className="FormAuth" onSubmit={this.EnviarDatosAuth} >
 
-            <
-            input type = "text"
-            name = "id_prod"
-            id = "id_prod"
-            value = {
-                this.state.id_prod
-            }
-            className = "form-control input_text_index"
-            autoComplete = "off"
-            placeholder = "CLAVE DE PRODUCTO"
-            onChange = {
-                this.Onchange
-            }
-            /> <
-            input type = "text"
-            id = "user"
-            name = "user"
-            className = "form-control input_text_index"
-            placeholder = "INGRESE SU USUARIO"
-            value = {
-                this.state.user
-            }
-            onChange = {
-                this.Onchange
-            }
-            /> <
-            input type = "password"
-            name = "pswLogin"
-            id = "pswLogin"
-            className = "form-control input_text_index"
-            autoComplete = "off"
-            placeholder = "CONTRASEÑA DE USUARIO"
-            value = {
-                this.state.pswLogin
-            }
-            onChange = {
-                this.Onchange
-            }
-            />
+                    < input type="text"
+                        name="id_prod"
+                        id="id_prod"
+                        value={this.state.id_prod}
+                        className="form-control input_text_index"
+                        autoComplete="off"
+                        placeholder="CLAVE DE PRODUCTO"
+                        onChange={this.Onchange}
+                    />
+                    <  input type="text"
+                        id="user"
+                        name="user"
+                        className="form-control input_text_index"
+                        placeholder="INGRESE SU USUARIO"
+                        value={this.state.user}
+                        onChange={this.Onchange}
+                    />
+                    <input type="password"
+                        name="pswLogin"
+                        id="pswLogin"
+                        className="form-control input_text_index"
+                        autoComplete="off"
+                        placeholder="CONTRASEÑA DE USUARIO"
+                        value={this.state.pswLogin}
+                        onChange={this.Onchange}
+                    />
 
-            <
-            br / >
-            <
-            br / >
-            <
-            br / >
-            <
-            input className = "btn btn-success"
-            type = "submit"
-            value = "CONTINUAR" /
-            >
-            <
-            br / >
+                    < br />
+                    < br />
+                    <br />
+                    <input className="btn btn-success" type="submit" value="CONTINUAR" />
+                    <br />
 
-            <
-            /form> <
-            br / >
-            <
-            /Box>
+                </form> <br />
+            </Box>
         )
     }
 }

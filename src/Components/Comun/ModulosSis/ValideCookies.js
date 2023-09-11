@@ -1,4 +1,4 @@
-export default function ValideCookies(route, cookies, keyDatosCookies) {
+export default function ValideCookies(route, cookies) {
 
     /**
      * INSPECCIONA LAS CREDENCIALES COOKIES
@@ -16,34 +16,31 @@ export default function ValideCookies(route, cookies, keyDatosCookies) {
             RUTA A DONDE DEBE ESTAR DADO EJECUCIÓN DEL PROCESO
      */
 
-    let resp = { value: false, msj: '', routeTarjet: '' }
+    let resp = { value: false, msj: '', routeTarjet: 'http://localhost:3000/' }
     let dato
     let valide_email = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
 
+
+
     try {
         //consulta comparación cookies
-        for (let i = 0; i < keyDatosCookies.length; i++) {
-            dato = cookies.get(keyDatosCookies[i])
+        //-- si estoy en APP sin token retorne llevame a inicio
+        if (route === 'Dashboard' && cookies.get('token') === undefined) resp.msj = 'DEBE LOGUEARSE PARA USAR LA APP'
+        if (route === 'Dashboard' && cookies.get('token') !== undefined) {
+            resp.value = true
         }
 
-        if (dato !== undefined) {//si encuentra datos de sesión activa
-            console.log(`datos de cookies ${dato}`)
-
-            //confirmación de datos almacenados 
-            if (dato[0] && valide_email.test(dato[1])) { //si aceptó políticas previo y el correo es de tipo email
-                //ES LEGAL LA SESIÓN
-                resp.value = true
-                route === 'Inicio' || route === 'Singin' ? resp.msj = 'Sesión ya se encuentra activa. Redirigiendo...' : resp.msj = `Bienvenido de nuevo ${dato[2]}`
-                route === 'Inicio' || route === 'Singin' ? resp.routeTarjet = 'Dashboard' : resp.routeTarjet = ''
-            }
-            else {
-                //NO ES LEGAL LA SESIÓN
-                dato.map((d) => cookies.remove(d))
-                resp.value = false
-                resp.msj = 'Cookies almacenadas caducaron. Se resetea APP'
-                resp.routeTarjet = 'Inicio'
-            }
+        //--- si estoy en logeo y encuentra un token retorne true y lleveme a App
+        if (route === 'Singin' && cookies.get('token') !== undefined) {
+            resp.value = true
+            resp.msj = 'Ya se encuentra una sesión activa'
+            resp.routeTarjet = 'http://localhost:3000/acrcontroller/web/main/Dashboard'
         }
+
+
+
+
+
 
     } catch (error) {
         resp.routeTarjet = 'Inicio'

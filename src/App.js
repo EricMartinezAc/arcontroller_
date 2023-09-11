@@ -3,14 +3,12 @@ import React, { Component } from 'react'
 //recursos
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { Box } from '@mui/material';
 
 //componentes
 import Inicio_ from './Components/Routes/Inicio/Inicio'
 import Singin_ from './Components/Routes/Singing/Singin';
 import Dashboard_ from './Components/Routes/Dashboard/Dashboard';
-import Loading from './Components/Comun/Loading';
-import AlertDialogs from './Components/Comun/DescriptionAlerts';
+
 
 
 export default class App extends Component {
@@ -20,6 +18,8 @@ export default class App extends Component {
     this.state = {
     }
   }
+
+
   render() {
     return (
       <div className="App">

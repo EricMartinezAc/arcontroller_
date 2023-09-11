@@ -34,9 +34,9 @@ export default class ReqResDatos_auth_API {
         let return_ = null
 
         await axios.post(path_API, {
-                process_: proceso,
-                datos_: datos
-            })
+            process_: proceso,
+            datos_: datos
+        })
             .then(response => {
                 return_ = {
                     value: response.data
@@ -81,7 +81,7 @@ export default class ReqResDatos_auth_API {
                 window.location = `http://localhost:3000/acrcontroller/web/main/Dashboard`
             }, 300)
         }).catch(err => {
-            alert('Error en generación de token')
+            alert('Error en generación de token:', err)
             setTimeout(() => {
                 window.location = `http://localhost:3000/`
             }, 300)

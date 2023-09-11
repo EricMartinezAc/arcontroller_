@@ -9,6 +9,7 @@ import RestarApp from '../../Comun/ModulosSis/RestarApp';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import clsx from 'clsx';
+import Class_API from '../../Comun/ModulosSis/class_API';
 
 //componentes
 //-Header
@@ -31,6 +32,11 @@ import ViewPlaneacion from './Components/viewPlaneacion/View';
 import ViewRRHH from './Components/viewRRHH/View';
 
 import Footer from '../Comun/Footer/Footer.js'
+
+//alertas
+import Loading from '../../Comun/Loading';
+import AlertDialogs from '../../Comun/DescriptionAlerts';
+import axios from 'axios';
 
 
 export default class Dashboard extends Component {
@@ -56,6 +62,18 @@ export default class Dashboard extends Component {
                 viewConfig: 'none',
                 viewAyuda: 'none',
                 viewNubeVirtual: 'none'
+            },
+            //funcionalidades
+            state_loading: false,
+            stateAlertDialogs: false,
+            AlertSeverity: 'success',
+            AlertTilte: '',
+            AlertMsjLow: '',
+            AlertMsjHight: '',
+            //datos
+            user: {
+                name: 'juanchito',
+                area: 'tumalk'
             }
         }
     }
@@ -67,26 +85,38 @@ export default class Dashboard extends Component {
         mes: String(new Date(Date.now()).getMonth() + 1),
         anio: String(new Date(Date.now()).getFullYear())
     }
-    keyDatosCookies = ['resp', 'email_', 'product', 'pswUser_', 'area_',]
+    Class_API_ = new Class_API()
 
-    //funciones globales
-    CambiarEstadoAlert(stateAlert_, mensajeAlerta_, severityAlert_) {
+    //funciones generales
+    CambiarEstadoDescriptionAlerts = (
+        stateAlertDialogs_, AlertSeverity_, AlertTilte_,
+        AlertMsjLow_, AlertMsjHight_) => {
         this.setState({
-            estadoAlert: stateAlert_,
-            mensajeAlerta: mensajeAlerta_,
-            severityAlert: severityAlert_
+            stateAlertDialogs: stateAlertDialogs_,
+            AlertSeverity: AlertSeverity_,
+            AlertTilte: AlertTilte_,
+            AlertMsjLow: AlertMsjLow_,
+            AlertMsjHight: AlertMsjHight_
         })
-        setTimeout(() => {
-            this.setState({
-                estadoAlert: 'none',
-                mensajeAlerta: '',
-                severityAlert: 'info'
-            })
-        }, 3000);
+    }
+    CambiarEstadoLoading = () => { this.setState({ state_loading: !this.state.state_loading }) }
+
+    //consumo de API
+    CargarUsusario = () => {
+        this.Class_API_.CargarDatosUserAPI(this.cookies.get('token'), this.cookies.get('id_prod'), axios)
     }
 
-
     //funciones del sistema
+    CerrarApp = (msj) => {
+        this.CambiarEstadoDescriptionAlerts(true, 'error', 'LOGOUT', this.state.user.name || 'sin usuario', msj || 'La aplicación a cerrado de forma segura. ')
+        setTimeout(async () => {
+            this.CambiarEstadoLoading()
+            setTimeout(() => {
+                window.location = '/'
+            }, 800);
+        }, 4500);
+    }
+
     handleDrawer = () => {
         this.state.openDrawer === 'none' ? this.setState({ openDrawer: 'block' }) : this.setState({ openDrawer: 'none' })
     }
@@ -311,78 +341,73 @@ export default class Dashboard extends Component {
         }
     }
 
+    //ciclo de vida del componente
     componentDidMount = () => {
-        this.cookies.set('resp', 'true', {
-            path: '/',
-            secure: true,
-            sameSite: 'strict',
-            maxAge: 36000
-        })
-        this.cookies.set('email_', 'email_', {
-            path: '/',
-            secure: true,
-            sameSite: 'strict',
-            maxAge: 36000
-        })
-        this.cookies.set('product', 'product', {
-            path: '/',
-            secure: true,
-            sameSite: 'strict',
-            maxAge: 36000
-        })
-        this.cookies.set('pswUser_', 'pswUser_', {
-            path: '/',
-            secure: true,
-            sameSite: 'strict',
-            maxAge: 36000
-        })
-        this.cookies.set('area_', 'area_', {
-            path: '/',
-            secure: true,
-            sameSite: 'strict',
-            maxAge: 36000
-        })
-        //RestarApp(this.cookies, this.keyDatosCookies,3)
-        const resptValideCookies = ValideCookies('Dashboard', this.cookies, this.keyDatosCookies)
-        if (resptValideCookies.value) {
-            this.CambiarEstadoAlert('block', resptValideCookies.msj, 'info')
-        } else {
-            this.CambiarEstadoAlert('block', resptValideCookies.msj, 'error')
+        let resptValideCookies = ValideCookies('Dashboard', this.cookies)
+        let compareTokens = true //se debe compara token de cookies con token de usuario
+        if (resptValideCookies.value === false && !compareTokens) {
+            this.CerrarApp(resptValideCookies.msj)
         }
+        else {
+            this.CargarUsusario()
+        }
+
+
+
     }
 
-    componentDidUpdate = () => {
-
-
+    componentDidUpdate = async () => {
     }
 
     render() {
         return (
             <Box>
-                <Alert
-                    style={{
-                        display: this.state.estadoAlert,
-                        zIndex: 100,
-                        width: '100%',
+
+                {/* ALERTAS */}
+                <Box
+                    sx={{
+                        display: this.state.state_loading ? 'block' : 'none',
+                        backgroundColor: 'rgba(238, 221, 238, 0.742)',
+                        zIndex: 110,
                         position: 'absolute',
-                        top: '40%'
+                        top: '0',
+                        left: '0',
+                        width: '100%',
+                        height: '100%',
+                        justifyContent: 'center',
+                        alignItems: 'center'
                     }}
-                    severity={this.state.severityAlert}
-                >{this.state.mensajeAlerta}
-                </Alert>
+                >
+                    <Loading />
+                </Box>
+                <Box
+                    sx={{
+                        display: this.state.stateAlertDialogs ? 'flex' : 'none',
+                        width: '100%',
+                        height: '60%',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: '#808b96 '
+                    }}
+                >
+                    < AlertDialogs
+                        AlertSeverity={this.state.AlertSeverity}
+                        AlertTilte={this.state.AlertTilte}
+                        AlertMsjLow={this.state.AlertMsjLow}
+                        AlertMsjHight={this.state.AlertMsjHight}
+                    />
+                </Box>
                 <header>
                     <ToolbarDashboard
-                        RestarApp={RestarApp}
-                        cookies={this.cookies}
-                        keyDatosCookies={this.keyDatosCookies}
                         fecha={this.fecha}
+                        user={this.state.user}
                         handleDrawer={this.handleDrawer}
                         openDrawer={this.state.openDrawer}
-                        ValideCookies={this.ValideCookies}
-                        CambiarEstadoAlert={this.CambiarEstadoAlert.bind(this)}
+                        CerrarApp={this.CerrarApp}
                     />
                 </header>
                 {/* Menú lateral barra */}
+
                 <Grid container spacing={0}>
                     <Grid item xs={2}>
                         <aside>
@@ -422,8 +447,8 @@ export default class Dashboard extends Component {
                             <Box style={{ display: this.state.visibleVentana.viewDashboardMtto }}>
                                 <ViewDashboardMtto />
                             </Box>
-                            
-                
+
+
                             <Box style={{ display: this.state.visibleVentana.viewLocalidades }}>
                                 <ViewLocalidades />
                             </Box>
@@ -456,6 +481,7 @@ export default class Dashboard extends Component {
 
 
                 </Grid>
+
 
                 <footer>
                     <Footer />

@@ -16,7 +16,8 @@ export default function DescriptionAlerts(props) {
             <Box sx={{ width: '70%' }} spacing={2}>
                 <Alert severity='error'>
                     <AlertTitle>{props.AlertTilte}</AlertTitle>
-                    {props.AlertMsjLow}<strong>{props.AlertMsjHight}</strong>
+                    {props.AlertMsjLow}.
+                    <strong>{props.AlertMsjHight}</strong>
                 </Alert>
             </Box>
         );
@@ -27,7 +28,8 @@ export default function DescriptionAlerts(props) {
             <Box sx={{ width: '70%' }} spacing={2}>
                 <Alert severity='warning'>
                     <AlertTitle>{props.AlertTilte}</AlertTitle>
-                    {props.AlertMsjLow}<strong>{props.AlertMsjHight}</strong>
+                    {props.AlertMsjLow}.
+                    <strong> {props.AlertMsjHight}</strong>
                 </Alert>
             </Box>
         );
@@ -37,7 +39,8 @@ export default function DescriptionAlerts(props) {
             <Box sx={{ width: '70%' }} spacing={2}>
                 <Alert severity='info'>
                     <AlertTitle>{props.AlertTilte}</AlertTitle>
-                    {props.AlertMsjLow}<strong>{props.AlertMsjHight}</strong>
+                    {props.AlertMsjLow}.
+                    <strong> {props.AlertMsjHight}</strong>
                 </Alert>
             </Box>
         );
@@ -47,7 +50,8 @@ export default function DescriptionAlerts(props) {
             <Box sx={{ width: '70%' }} spacing={2}>
                 <Alert severity='success'>
                     <AlertTitle>{props.AlertTilte}</AlertTitle>
-                    {props.AlertMsjLow}<strong>{props.AlertMsjHight}</strong>
+                    {props.AlertMsjLow}.
+                    <strong> {props.AlertMsjHight}</strong>
                 </Alert>
             </Box>
         );
