@@ -25,7 +25,7 @@ export default class ReqResDatos_API {
     CargarDatosUserAPI = async (auth1, id_prod, axios) => {
         console.log(`cargando ${auth1}`)
 
-        await axios.get(`http://localhost:2023/api/arcontroller/app/dashboard`, {
+        await axios.get(`http://localhost:2023/api/arcontroller/load/data/user`, {
             headers: {
                 'autorization': `Bearer ${auth1} ${id_prod}`
             }
