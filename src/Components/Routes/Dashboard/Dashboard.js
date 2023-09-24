@@ -56,6 +56,7 @@ export default class Dashboard extends Component {
       mensajeAlerta: '',
       severityAlert: 'success',
       visibleVentana: {
+        viewEmptyDatasDashboard: 'none',
         viewDashboard: 'block',
         viewDashboardContable: 'none',
         viewDashboardMtto: 'none',
@@ -80,18 +81,19 @@ export default class Dashboard extends Component {
       user: {
         name: 'juanchito',
         area: 'tumalk'
-      }
+      },
+      datas: {}
     }
   }
 
   //variables globales
-  cookies = new Cookies()
   fecha = {
     dia: String(new Date(Date.now()).getDate()),
     mes: String(new Date(Date.now()).getMonth() + 1),
     anio: String(new Date(Date.now()).getFullYear())
   }
   Class_API_ = new Class_API()
+  cookies = new Cookies()
 
   //funciones generales
   CambiarEstadoDescriptionAlerts = (
@@ -114,43 +116,21 @@ export default class Dashboard extends Component {
   }
 
   //consumo de API
-  CargarUsusario = () => {
-    console.log(this.cookies.getAll())
-    this.Class_API_.CargarDatosUserAPI(
+  CargaInicial = () => {
+    let RSPTaAPI = this.Class_API_.ConsumirDatos(
       this.cookies.get('token'),
       this.cookies.get('id_prod'),
+      this.cookies.get('user'),
+      'StartApp',
       axios
     )
-  }
-
-  //funciones del sistema
-  CerrarApp = msj => {
-    this.CambiarEstadoDescriptionAlerts(
-      true,
-      'error',
-      'LOGOUT',
-      this.state.user.name || 'sin usuario',
-      msj || 'La aplicación a cerrado de forma segura. '
-    )
-    setTimeout(async () => {
-      this.CambiarEstadoLoading()
-      setTimeout(() => {
-        window.location = '/'
-      }, 800)
-    }, 4500)
-  }
-
-  handleDrawer = () => {
-    this.state.openDrawer === 'none'
-      ? this.setState({ openDrawer: 'block' })
-      : this.setState({ openDrawer: 'none' })
-  }
-
-  handleWindow = value => {
-    console.log(value)
-    if (value === 0) {
+    if (RSPTaAPI.valor === 200) {
+      console.log('datos cargados')
       this.setState({
+        user: RSPTaAPI.user,
+        datas: RSPTaAPI.datas,
         visibleVentana: {
+          viewEmptyDatasDashboard: 'none',
           viewDashboard: 'block',
           viewDashboardContable: 'none',
           viewDashboardMtto: 'none',
@@ -165,190 +145,12 @@ export default class Dashboard extends Component {
           viewNubeVirtual: 'none'
         }
       })
-    }
-    if (value === 1) {
+    } else {
       this.setState({
+        user: {},
+        datas: {},
         visibleVentana: {
-          viewDashboard: 'none',
-          viewDashboardContable: 'block',
-          viewDashboardMtto: 'none',
-          viewLocalidades: 'none',
-          viewRRHH: 'none',
-          viewLogist: 'none',
-          viewPlaneacion: 'none',
-          viewHSEQ: 'none',
-          viewMarcoLegal: 'none',
-          viewConfig: 'none',
-          viewAyuda: 'none',
-          viewNubeVirtual: 'none'
-        }
-      })
-    }
-    if (value === 2) {
-      this.setState({
-        visibleVentana: {
-          viewDashboard: 'none',
-          viewDashboardContable: 'none',
-          viewDashboardMtto: 'block',
-          viewLocalidades: 'none',
-          viewRRHH: 'none',
-          viewLogist: 'none',
-          viewPlaneacion: 'none',
-          viewHSEQ: 'none',
-          viewMarcoLegal: 'none',
-          viewConfig: 'none',
-          viewAyuda: 'none',
-          viewNubeVirtual: 'none'
-        }
-      })
-    }
-    if (value === 3) {
-      this.setState({
-        visibleVentana: {
-          viewDashboard: 'none',
-          viewDashboardContable: 'none',
-          viewDashboardMtto: 'none',
-          viewLocalidades: 'block',
-          viewRRHH: 'none',
-          viewLogist: 'none',
-          viewPlaneacion: 'none',
-          viewHSEQ: 'none',
-          viewMarcoLegal: 'none',
-          viewConfig: 'none',
-          viewAyuda: 'none',
-          viewNubeVirtual: 'none'
-        }
-      })
-    }
-    if (value === 4) {
-      this.setState({
-        visibleVentana: {
-          viewDashboard: 'none',
-          viewDashboardContable: 'none',
-          viewDashboardMtto: 'none',
-          viewLocalidades: 'none',
-          viewRRHH: 'block',
-          viewLogist: 'none',
-          viewPlaneacion: 'none',
-          viewHSEQ: 'none',
-          viewMarcoLegal: 'none',
-          viewConfig: 'none',
-          viewAyuda: 'none',
-          viewNubeVirtual: 'none'
-        }
-      })
-    }
-    if (value === 5) {
-      this.setState({
-        visibleVentana: {
-          viewDashboard: 'none',
-          viewDashboardContable: 'none',
-          viewDashboardMtto: 'none',
-          viewLocalidades: 'none',
-          viewRRHH: 'none',
-          viewLogist: 'block',
-          viewPlaneacion: 'none',
-          viewHSEQ: 'none',
-          viewMarcoLegal: 'none',
-          viewConfig: 'none',
-          viewAyuda: 'none',
-          viewNubeVirtual: 'none'
-        }
-      })
-    }
-    if (value === 6) {
-      this.setState({
-        visibleVentana: {
-          viewDashboard: 'none',
-          viewDashboardContable: 'none',
-          viewDashboardMtto: 'none',
-          viewLocalidades: 'none',
-          viewRRHH: 'none',
-          viewLogist: 'none',
-          viewPlaneacion: 'block',
-          viewHSEQ: 'none',
-          viewMarcoLegal: 'none',
-          viewConfig: 'none',
-          viewAyuda: 'none',
-          viewNubeVirtual: 'none'
-        }
-      })
-    }
-    if (value === 7) {
-      this.setState({
-        visibleVentana: {
-          viewDashboard: 'none',
-          viewDashboardContable: 'none',
-          viewDashboardMtto: 'none',
-          viewLocalidades: 'none',
-          viewRRHH: 'none',
-          viewLogist: 'none',
-          viewPlaneacion: 'none',
-          viewHSEQ: 'block',
-          viewMarcoLegal: 'none',
-          viewConfig: 'none',
-          viewAyuda: 'none',
-          viewNubeVirtual: 'none'
-        }
-      })
-    }
-    if (value === 8) {
-      this.setState({
-        visibleVentana: {
-          viewDashboard: 'none',
-          viewDashboardContable: 'none',
-          viewDashboardMtto: 'none',
-          viewLocalidades: 'none',
-          viewRRHH: 'none',
-          viewLogist: 'none',
-          viewPlaneacion: 'none',
-          viewHSEQ: 'none',
-          viewMarcoLegal: 'block',
-          viewConfig: 'none',
-          viewAyuda: 'none',
-          viewNubeVirtual: 'none'
-        }
-      })
-    }
-    if (value === 9) {
-      this.setState({
-        visibleVentana: {
-          viewDashboard: 'none',
-          viewDashboardContable: 'none',
-          viewDashboardMtto: 'none',
-          viewLocalidades: 'none',
-          viewRRHH: 'none',
-          viewLogist: 'none',
-          viewPlaneacion: 'none',
-          viewHSEQ: 'none',
-          viewMarcoLegal: 'none',
-          viewConfig: 'block',
-          viewAyuda: 'none',
-          viewNubeVirtual: 'none'
-        }
-      })
-    }
-    if (value === 10) {
-      this.setState({
-        visibleVentana: {
-          viewDashboard: 'none',
-          viewDashboardContable: 'none',
-          viewDashboardMtto: 'none',
-          viewLocalidades: 'none',
-          viewRRHH: 'none',
-          viewLogist: 'none',
-          viewPlaneacion: 'none',
-          viewHSEQ: 'none',
-          viewMarcoLegal: 'none',
-          viewConfig: 'none',
-          viewAyuda: 'block',
-          viewNubeVirtual: 'none'
-        }
-      })
-    }
-    if (value === 11) {
-      this.setState({
-        visibleVentana: {
+          viewEmptyDatasDashboard: 'block',
           viewDashboard: 'none',
           viewDashboardContable: 'none',
           viewDashboardMtto: 'none',
@@ -360,20 +162,274 @@ export default class Dashboard extends Component {
           viewMarcoLegal: 'none',
           viewConfig: 'none',
           viewAyuda: 'none',
-          viewNubeVirtual: 'block'
+          viewNubeVirtual: 'none'
         }
       })
     }
   }
 
+  //funciones del sistema
+  CerrarApp = msj => {
+    this.CambiarEstadoDescriptionAlerts(
+      true,
+      'error',
+      'LOGOUT',
+      this.cookies.get('user') || 'sin usuario',
+      msj || 'La aplicación a cerrado de forma segura. '
+    )
+    setTimeout(async () => {
+      this.CambiarEstadoLoading()
+      setTimeout(() => {
+        window.location = '/'
+      }, 800)
+    }, 4500)
+  }
+
+  // handleDrawer = () => {
+  //   this.state.openDrawer === 'none'
+  //     ? this.setState({ openDrawer: 'block' })
+  //     : this.setState({ openDrawer: 'none' })
+  // }
+
+  // handleWindow = value => {
+  //   console.log(value)
+  //   if (value === 0) {
+  //     this.setState({
+  //       visibleVentana: {
+  //         viewDashboard: 'block',
+  //         viewDashboardContable: 'none',
+  //         viewDashboardMtto: 'none',
+  //         viewLocalidades: 'none',
+  //         viewRRHH: 'none',
+  //         viewLogist: 'none',
+  //         viewPlaneacion: 'none',
+  //         viewHSEQ: 'none',
+  //         viewMarcoLegal: 'none',
+  //         viewConfig: 'none',
+  //         viewAyuda: 'none',
+  //         viewNubeVirtual: 'none'
+  //       }
+  //     })
+  //   }
+  //   if (value === 1) {
+  //     this.setState({
+  //       visibleVentana: {
+  //         viewDashboard: 'none',
+  //         viewDashboardContable: 'block',
+  //         viewDashboardMtto: 'none',
+  //         viewLocalidades: 'none',
+  //         viewRRHH: 'none',
+  //         viewLogist: 'none',
+  //         viewPlaneacion: 'none',
+  //         viewHSEQ: 'none',
+  //         viewMarcoLegal: 'none',
+  //         viewConfig: 'none',
+  //         viewAyuda: 'none',
+  //         viewNubeVirtual: 'none'
+  //       }
+  //     })
+  //   }
+  //   if (value === 2) {
+  //     this.setState({
+  //       visibleVentana: {
+  //         viewDashboard: 'none',
+  //         viewDashboardContable: 'none',
+  //         viewDashboardMtto: 'block',
+  //         viewLocalidades: 'none',
+  //         viewRRHH: 'none',
+  //         viewLogist: 'none',
+  //         viewPlaneacion: 'none',
+  //         viewHSEQ: 'none',
+  //         viewMarcoLegal: 'none',
+  //         viewConfig: 'none',
+  //         viewAyuda: 'none',
+  //         viewNubeVirtual: 'none'
+  //       }
+  //     })
+  //   }
+  //   if (value === 3) {
+  //     this.setState({
+  //       visibleVentana: {
+  //         viewDashboard: 'none',
+  //         viewDashboardContable: 'none',
+  //         viewDashboardMtto: 'none',
+  //         viewLocalidades: 'block',
+  //         viewRRHH: 'none',
+  //         viewLogist: 'none',
+  //         viewPlaneacion: 'none',
+  //         viewHSEQ: 'none',
+  //         viewMarcoLegal: 'none',
+  //         viewConfig: 'none',
+  //         viewAyuda: 'none',
+  //         viewNubeVirtual: 'none'
+  //       }
+  //     })
+  //   }
+  //   if (value === 4) {
+  //     this.setState({
+  //       visibleVentana: {
+  //         viewDashboard: 'none',
+  //         viewDashboardContable: 'none',
+  //         viewDashboardMtto: 'none',
+  //         viewLocalidades: 'none',
+  //         viewRRHH: 'block',
+  //         viewLogist: 'none',
+  //         viewPlaneacion: 'none',
+  //         viewHSEQ: 'none',
+  //         viewMarcoLegal: 'none',
+  //         viewConfig: 'none',
+  //         viewAyuda: 'none',
+  //         viewNubeVirtual: 'none'
+  //       }
+  //     })
+  //   }
+  //   if (value === 5) {
+  //     this.setState({
+  //       visibleVentana: {
+  //         viewDashboard: 'none',
+  //         viewDashboardContable: 'none',
+  //         viewDashboardMtto: 'none',
+  //         viewLocalidades: 'none',
+  //         viewRRHH: 'none',
+  //         viewLogist: 'block',
+  //         viewPlaneacion: 'none',
+  //         viewHSEQ: 'none',
+  //         viewMarcoLegal: 'none',
+  //         viewConfig: 'none',
+  //         viewAyuda: 'none',
+  //         viewNubeVirtual: 'none'
+  //       }
+  //     })
+  //   }
+  //   if (value === 6) {
+  //     this.setState({
+  //       visibleVentana: {
+  //         viewDashboard: 'none',
+  //         viewDashboardContable: 'none',
+  //         viewDashboardMtto: 'none',
+  //         viewLocalidades: 'none',
+  //         viewRRHH: 'none',
+  //         viewLogist: 'none',
+  //         viewPlaneacion: 'block',
+  //         viewHSEQ: 'none',
+  //         viewMarcoLegal: 'none',
+  //         viewConfig: 'none',
+  //         viewAyuda: 'none',
+  //         viewNubeVirtual: 'none'
+  //       }
+  //     })
+  //   }
+  //   if (value === 7) {
+  //     this.setState({
+  //       visibleVentana: {
+  //         viewDashboard: 'none',
+  //         viewDashboardContable: 'none',
+  //         viewDashboardMtto: 'none',
+  //         viewLocalidades: 'none',
+  //         viewRRHH: 'none',
+  //         viewLogist: 'none',
+  //         viewPlaneacion: 'none',
+  //         viewHSEQ: 'block',
+  //         viewMarcoLegal: 'none',
+  //         viewConfig: 'none',
+  //         viewAyuda: 'none',
+  //         viewNubeVirtual: 'none'
+  //       }
+  //     })
+  //   }
+  //   if (value === 8) {
+  //     this.setState({
+  //       visibleVentana: {
+  //         viewDashboard: 'none',
+  //         viewDashboardContable: 'none',
+  //         viewDashboardMtto: 'none',
+  //         viewLocalidades: 'none',
+  //         viewRRHH: 'none',
+  //         viewLogist: 'none',
+  //         viewPlaneacion: 'none',
+  //         viewHSEQ: 'none',
+  //         viewMarcoLegal: 'block',
+  //         viewConfig: 'none',
+  //         viewAyuda: 'none',
+  //         viewNubeVirtual: 'none'
+  //       }
+  //     })
+  //   }
+  //   if (value === 9) {
+  //     this.setState({
+  //       visibleVentana: {
+  //         viewDashboard: 'none',
+  //         viewDashboardContable: 'none',
+  //         viewDashboardMtto: 'none',
+  //         viewLocalidades: 'none',
+  //         viewRRHH: 'none',
+  //         viewLogist: 'none',
+  //         viewPlaneacion: 'none',
+  //         viewHSEQ: 'none',
+  //         viewMarcoLegal: 'none',
+  //         viewConfig: 'block',
+  //         viewAyuda: 'none',
+  //         viewNubeVirtual: 'none'
+  //       }
+  //     })
+  //   }
+  //   if (value === 10) {
+  //     this.setState({
+  //       visibleVentana: {
+  //         viewDashboard: 'none',
+  //         viewDashboardContable: 'none',
+  //         viewDashboardMtto: 'none',
+  //         viewLocalidades: 'none',
+  //         viewRRHH: 'none',
+  //         viewLogist: 'none',
+  //         viewPlaneacion: 'none',
+  //         viewHSEQ: 'none',
+  //         viewMarcoLegal: 'none',
+  //         viewConfig: 'none',
+  //         viewAyuda: 'block',
+  //         viewNubeVirtual: 'none'
+  //       }
+  //     })
+  //   }
+  //   if (value === 11) {
+  //     this.setState({
+  //       visibleVentana: {
+  //         viewDashboard: 'none',
+  //         viewDashboardContable: 'none',
+  //         viewDashboardMtto: 'none',
+  //         viewLocalidades: 'none',
+  //         viewRRHH: 'none',
+  //         viewLogist: 'none',
+  //         viewPlaneacion: 'none',
+  //         viewHSEQ: 'none',
+  //         viewMarcoLegal: 'none',
+  //         viewConfig: 'none',
+  //         viewAyuda: 'none',
+  //         viewNubeVirtual: 'block'
+  //       }
+  //     })
+  //   }
+  // }
+
   //ciclo de vida del componente
+
   componentDidMount = () => {
     let resptValideCookies = ValideCookies('Dashboard', this.cookies)
     let compareTokens = true //se debe compara token de cookies con token de usuario
     if (resptValideCookies.value === false || !compareTokens) {
       this.CerrarApp(resptValideCookies.msj)
     } else {
-      this.CargarUsusario()
+      this.CambiarEstadoDescriptionAlerts(
+        true,
+        'success',
+        'CREDENTIALES VERIFICADAS',
+        this.cookies.get('user'),
+        resptValideCookies.msj
+      )
+      setTimeout(() => {
+        this.CambiarEstadoDescriptionAlerts(false, '', '', '', '')
+      }, 3000)
+      this.CargaInicial()
     }
   }
 
@@ -416,7 +472,8 @@ export default class Dashboard extends Component {
             AlertMsjHight={this.state.AlertMsjHight}
           />
         </Box>
-        <header>
+
+        {/* <header>
           <ToolbarDashboard
             fecha={this.fecha}
             user={this.state.user}
@@ -425,7 +482,7 @@ export default class Dashboard extends Component {
             CerrarApp={this.CerrarApp}
           />
         </header>
-        {/* Menú lateral barra */}
+        {/* Menú lateral barra *
 
         <Grid container spacing={0}>
           <Grid item xs={2}>
@@ -510,7 +567,7 @@ export default class Dashboard extends Component {
               </Box>
             </main>
           </Grid>
-        </Grid>
+        </Grid> */}
 
         <footer>
           <Footer />

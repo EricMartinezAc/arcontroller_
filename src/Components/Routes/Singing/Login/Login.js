@@ -72,6 +72,7 @@ export default class Login extends Component {
           if ((await RespAPI.value.valor) === 400) {
             await AsigneCookies('token', RespAPI.value.respt, cookies)
             await AsigneCookies('id_prod', this.state.id_prod, cookies)
+            await AsigneCookies('user', this.state.user, cookies)
             await reqResDatos_auth_API.GetAPP(RespAPI.value.respt, axios)
           } else {
             await this.CambiarEstadoDescriptionAlerts(
