@@ -25,7 +25,7 @@ export default class ReqResDatos_auth_API {
 
   SendDatsAPI = async (proceso, axios) => {
     console.log(`solicitando credenciales para ${this.user} en ${this.id_prod}`)
-    const path_API = `http://localhost:2023/api/arcontroller/users/${proceso}`
+    const path_API = `https://arc-backend-api.vercel.app/api/arcontroller/users/${proceso}`
     //'https://arcbackendapi.up.railway.app:6662/api/arcontroller/users/auth'
     //+
     //https://arcbackendapi.up.railway.app:5817/api/arcontroller/users/auth'
@@ -74,21 +74,29 @@ export default class ReqResDatos_auth_API {
     console.log(`transfiriendo a APP`)
 
     await axios
-      .get(`http://localhost:2023/api/arcontroller/app/dashboard`, {
-        headers: {
-          autorization: `Bearer ${auth1}`
+      .get(
+        `https://arc-backend-api.vercel.app/api/arcontroller/app/dashboard`,
+        {
+          headers: {
+            autorization: `Bearer ${auth1}`
+          }
         }
-      })
+      )
       .then(resp => {
         console.log(resp.data.valor)
         setTimeout(() => {
-          window.location = `http://localhost:3000/acrcontroller/web/main/Dashboard`
+          if (resp.data.valor === 100) {
+            window.location = `https://arcontroller.vercel.app/acrcontroller/web/main/Dashboard`
+          } else {
+            alert(resp.data.msj)
+            window.location = `https://arcontroller.vercel.app/`
+          }
         }, 300)
       })
       .catch(err => {
         alert('Error en generación de token:', err)
         setTimeout(() => {
-          window.location = `http://localhost:3000/`
+          window.location = `https://arcontroller.vercel.app/`
         }, 300)
         console.error('Error :', err)
       })

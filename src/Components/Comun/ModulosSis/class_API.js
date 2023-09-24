@@ -22,18 +22,21 @@ export default class ReqResDatos_API {
 
   ConsumirDatos = async (auth1, id_prod, user, proceso, axios) => {
     await axios
-      .get(`http://localhost:2023/api/arcontroller/load/data/startapp`, {
-        headers: {
-          autorization: `Bearer ${auth1} ${id_prod} ${user} ${proceso}`
+      .get(
+        `https://arc-backend-api.vercel.app/api/arcontroller/load/data/startapp`,
+        {
+          headers: {
+            autorization: `Bearer ${auth1} ${id_prod} ${user} ${proceso}`
+          }
         }
-      })
+      )
       .then(resp => {
         console.log(resp)
       })
       .catch(err => {
         alert('Error en generación de token:', err)
         setTimeout(() => {
-          window.location = `http://localhost:3000/`
+          window.location = `https://arcontroller.vercel.app/`
         }, 300)
         console.error('Error :', err)
       })
